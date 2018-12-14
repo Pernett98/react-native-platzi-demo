@@ -53,6 +53,7 @@ class Player extends Component {
         controls={
           <ControlLayout>
             <PlayPause
+              paused={this.state.paused}
               onPress={this.togglePause}
             />
           </ControlLayout>

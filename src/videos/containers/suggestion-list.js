@@ -1,15 +1,31 @@
 import React, { Component } from 'react'
 import { FlatList, Text } from 'react-native'
+import { connect } from 'react-redux'
 
 import Layout from '../components/suggestion-list-layout'
 import Empty from '../components/empty'
 import Separator from '../../sections/components/vertical-separator'
 import Suggestion from '../components/suggestion'
+
 class SuggestionList extends Component {
 
   renderEmpty = () => <Empty text="Videos not found" />
   renderSeparator = () => <Separator />
-  renderItem = ({ item }) => <Suggestion {...item} />
+  renderItem = ({ item }) => (
+    <Suggestion 
+      onPress={() => { this.viewMovie(item) }}
+      {...item}
+    />
+  )
+
+  viewMovie = (item) => {
+    this.props.dispatch({
+      type: 'SET_SELECTED_MOVIE',
+      payload: {
+        movie: item
+      }
+    })
+  }
 
   keyExtractor = item => item.id.toString()
 
@@ -30,4 +46,10 @@ class SuggestionList extends Component {
 
 }
 
-export default SuggestionList
+function mapStateToProps(state) {
+  return {
+    list: state.suggestionList
+  }
+}
+
+export default connect(mapStateToProps)(SuggestionList)

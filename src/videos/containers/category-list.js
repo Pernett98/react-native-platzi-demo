@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, FlatList } from 'react-native'
+import { connect } from 'react-redux'
 
 import Layout from '../components/category-list-layout'
 import Empty from '../components/empty'
@@ -31,4 +32,10 @@ class CategoryList extends Component {
 
 }
 
-export default CategoryList
+function mapStateToProps(state) {
+  return {
+    list: state.categoryList
+  }
+}
+
+export default connect(mapStateToProps)(CategoryList)
